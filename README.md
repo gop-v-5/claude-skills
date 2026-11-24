@@ -12,6 +12,14 @@ Audits a page's schema.org structured data (JSON-LD) against Google's rich-resul
 - **What it needs:** nothing beyond Claude Code. Works on any public URL or pasted HTML.
 - **Status:** complete.
 
+### [`cro`](skills/cro/)
+
+Runs a conversion-rate-optimization audit on any public landing page or Shopify App Store app listing: a LIFT heuristic review, a PXL-ranked A/B test backlog, single-variable copy variants, and full hypothesis docs, in one nine-section report.
+
+- **Why I built it:** "why isn't this page converting" usually gets generic advice ("make the CTA bigger"). This skill ties every score to evidence on the page, separates real bugs from things worth testing, and keeps a per-page history so a re-audit shows what moved and never re-suggests a test you already ran.
+- **What it needs:** nothing beyond Claude Code. Optional: fill in `references/audience-context.md` with your audience and offer, and connect your own GA4 / Search Console skills for live data. Without them it runs on the page alone and labels the report heuristic-only.
+- **Status:** complete. `python3 skills/cro/evals/validate_docs.py` runs the built-in consistency and profile-store checks with no model calls.
+
 ### [`ad-fatigue-detection`](skills/ad-fatigue-detection/)
 
 Scores Meta (Facebook/Instagram) ads for creative fatigue from daily per-ad trends, explains why an ad is fatiguing, and recommends the next action. Read-only: it never edits or pauses ads.
@@ -36,6 +44,7 @@ Each skill's own `SKILL.md` / `README.md` covers its setup (for example copying 
 
 ```bash
 cd skills/ad-fatigue-detection && pip3 install -r requirements.txt && python3 -m pytest -q
+cd ../cro && python3 evals/validate_docs.py
 ```
 
 ## Licence

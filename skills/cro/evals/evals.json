@@ -1,0 +1,734 @@
+[
+  {
+    "id": "homepage-direct-audit",
+    "prompt": "Audit https://www.example.com/ for CRO",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Runs the CRO audit workflow (LIFT + PXL + report) rather than a standalone data lookup or copy rewrite",
+        "weight": 3
+      },
+      {
+        "id": "full-nine-sections",
+        "description": "Produces the full nine-section report: Traffic intent summary, Engagement summary, Friction map, LIFT analysis, PXL prioritization, Experiment backlog, Copy variants, Hypothesis docs, Engineering fixes — in that order",
+        "weight": 3
+      },
+      {
+        "id": "no-fabricated-data",
+        "description": "Does NOT fabricate GA4/GSC/session-replay numbers; if a data layer is unavailable, the corresponding section is kept with an explicit 'no data' note rather than invented figures",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "how-it-works-casual",
+    "prompt": "Why isn't https://www.example.com/how-it-works converting? Give me some test ideas.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill (a conversion-diagnosis + test-ideas ask on a specific page)",
+        "weight": 3
+      },
+      {
+        "id": "lift-pxl-backlog",
+        "description": "Includes a LIFT analysis, a PXL prioritization, and an experiment backlog of test ideas",
+        "weight": 2
+      },
+      {
+        "id": "evidence-based-ideas",
+        "description": "Test ideas are derived from LIFT findings / page evidence, not generic CRO platitudes like 'make the CTA bigger'",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "pricing-full-audit-with-copy-focus",
+    "prompt": "Audit https://www.example.com/pricing for CRO with extra focus on the hero headline and primary CTA — give me LIFT, prioritized tests, and copy variants for the top picks.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO audit workflow",
+        "weight": 3
+      },
+      {
+        "id": "lift-pxl-copy",
+        "description": "Includes LIFT analysis, PXL prioritization, and Copy variants for the top copy-based test picks",
+        "weight": 2
+      },
+      {
+        "id": "voice-delegation",
+        "description": "Copy variants are produced by delegating phrasing to the marketing-voice skill (context: landing_page) when it is available; if it is unavailable, variants fall back to audience-context-only and the report notes that voice alignment is unverified",
+        "weight": 2
+      },
+      {
+        "id": "one-variable-per-test",
+        "description": "Each copy-variant block tests exactly ONE element type (headline OR CTA), never a combined headline+CTA change",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "customers-hypothesis-only",
+    "prompt": "Give me 3 A/B test hypotheses for https://www.example.com/customers with full specs.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill (a hypothesis-doc ask on a specific page), not a generic brainstorm",
+        "weight": 3
+      },
+      {
+        "id": "focused-hypothesis-output",
+        "description": "Produces a PXL ranking and full hypothesis docs (§5 + §8); does NOT pad the output out to the full nine-section audit when only hypotheses were asked for",
+        "weight": 2
+      },
+      {
+        "id": "full-hypothesis-fields",
+        "description": "Each hypothesis doc includes all required fields: hypothesis statement, control, variant, primary metric, secondary/guard metrics, audience, success criteria, sample size, duration, evidence, and what-we'll-learn",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "features-funnel-language",
+    "prompt": "Our trial signup funnel is leaking from the features page. URL is https://www.example.com/features — what should we test?",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill (funnel drop-off / what-to-test on a specific page)",
+        "weight": 3
+      },
+      {
+        "id": "lift-pxl-backlog",
+        "description": "Includes LIFT analysis, PXL prioritization, and an experiment backlog",
+        "weight": 2
+      },
+      {
+        "id": "respects-conversion-goal",
+        "description": "Frames findings around the stated trial-signup conversion goal rather than unrelated ecommerce criteria",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "integrations-audit-prioritize",
+    "prompt": "Run a CRO audit on https://www.example.com/integrations and prioritize what to fix first.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the full CRO audit workflow",
+        "weight": 3
+      },
+      {
+        "id": "lift-pxl-engineering",
+        "description": "Includes LIFT analysis, a PXL-prioritized ranking, and an Engineering fixes section separating non-test bugs from A/B tests",
+        "weight": 2
+      },
+      {
+        "id": "bugs-not-tests",
+        "description": "Routes bugs / broken elements / tracking gaps to Engineering fixes (Sev0/Sev1/Sev2), not into the experiment backlog",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "homepage-gsc-intent-audit",
+    "prompt": "Run a CRO audit on https://www.example.com/ focused on whether the hero copy actually matches the intent of the top GSC search queries driving traffic.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill (an audit framing), not a standalone GSC query lookup",
+        "weight": 3
+      },
+      {
+        "id": "gsc-delegation",
+        "description": "Delegates the GSC query pull to the google-search-console skill (or any GSC-capable skill in the registry) rather than calling a GSC API directly",
+        "weight": 2
+      },
+      {
+        "id": "intent-vs-hero",
+        "description": "Produces a Traffic intent summary and runs LIFT against the query-intent-vs-hero-copy match finding",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "how-it-works-lift-explicit",
+    "prompt": "Run a LIFT model review on https://www.example.com/how-it-works and tell me the two weakest factors.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill for a LIFT-only review on a specific page",
+        "weight": 3
+      },
+      {
+        "id": "focused-lift-only",
+        "description": "Produces the LIFT analysis as a focused slice (optionally plus the one data section the LIFT scoring leans on) — it does NOT expand the response into the full nine-section audit when only a LIFT review was requested",
+        "weight": 3
+      },
+      {
+        "id": "six-factors-and-weakest",
+        "description": "Scores all six LIFT factors (each 1-5, total /30) with page evidence and explicitly identifies the two lowest-scoring factors",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "homepage-friction-replay",
+    "prompt": "I pasted FullStory data for https://www.example.com/ below — 320 rage clicks on the hero image, 90 dead clicks on the testimonial logos, median scroll depth 22%. What's going wrong and what should we test?",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill and treats the pasted session-replay data as the friction source",
+        "weight": 3
+      },
+      {
+        "id": "verbatim-counts",
+        "description": "Extracts the pasted counts verbatim into the Friction map (320 rage clicks, 90 dead clicks, 22% median scroll) — never rounded or fabricated",
+        "weight": 3
+      },
+      {
+        "id": "friction-to-lift",
+        "description": "Maps the rage/dead clicks to LIFT factors and uses the counts as PXL evidence; produces Friction map, LIFT analysis, and PXL prioritization",
+        "weight": 2
+      },
+      {
+        "id": "no-misroute-no-invent",
+        "description": "Does not invent error-click counts the pasted data never mentioned, and keeps the rage/dead clicks as test evidence rather than misrouting them to Engineering fixes (the Sev0 'error clicks are bugs, not tests' rule applies only if error clicks are actually present)",
+        "weight": 1
+      },
+      {
+        "id": "no-fabricated-replay-window",
+        "description": "Does not fabricate a date range for the pasted FullStory data; labels its window as 'not specified'/'as pasted' in the Friction map rather than forcing it to match a GA4/GSC date header",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "custom-date-range",
+    "prompt": "Audit https://www.example.com/pricing for the last 90 days.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the full CRO audit workflow",
+        "weight": 2
+      },
+      {
+        "id": "explicit-resolved-dates",
+        "description": "Resolves 'last 90 days' to one explicit YYYY-MM-DD start/end date pair before delegating, and passes those same exact dates to every data layer it queries live (GA4, GSC, and any live session-replay skill) — never a relative phrase and never a per-source default. Session-replay data the user pastes is exempt and keeps its own window",
+        "weight": 3
+      },
+      {
+        "id": "header-reflects-window",
+        "description": "The report header 'Date range analysed' field shows the resolved ~90-day window (explicit dates, optionally labelled '90 days') — not the 28-day default",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "layout-only-backlog",
+    "prompt": "Audit https://www.example.com/integrations — focus on layout, navigation, and trust elements only.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO audit workflow",
+        "weight": 2
+      },
+      {
+        "id": "lift-pxl-backlog",
+        "description": "Includes LIFT analysis, PXL prioritization, and an experiment backlog focused on layout/structural changes",
+        "weight": 2
+      },
+      {
+        "id": "copy-variants-zero-or-one",
+        "description": "If the top five PXL-ranked ideas are all layout/structural, Section 7 (Copy variants) contains 0 or 1 variant blocks — NOT two pre-seeded blocks with placeholder content, and NOT an invented copy test",
+        "weight": 3
+      },
+      {
+        "id": "copy-section-notes",
+        "description": "Section 7 includes a notes line explaining that the top backlog is layout/structural rather than copy",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": "heuristic-only-no-analytics",
+    "prompt": "Audit https://www.example.com/pricing for CRO. Heads up — we have no GA4, Search Console, or session-replay set up, so there's no analytics data available.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the full CRO audit workflow and runs it heuristic-only on page evidence + LIFT rather than refusing or stalling for data",
+        "weight": 3
+      },
+      {
+        "id": "no-fabricated-data",
+        "description": "Does NOT fabricate GA4/GSC/session-replay numbers; the data sections (Traffic intent, Engagement, Friction map) are kept with explicit 'no data' notes and the audit is labelled heuristic-only",
+        "weight": 3
+      },
+      {
+        "id": "pxl-heuristic-only-scoring",
+        "description": "Scores the data-gated PXL criteria (traffic-volume Potential, both Importance traffic/value points, both Evidence points — quantitative and qualitative, since page evidence/LIFT is not a qualitative research source) as unknown/0 rather than guessing a 'yes', and notes in PXL prioritization that the ranking is relative with a reduced ceiling (8/16) so a low score means unmeasured, not weak",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "negative-ga4-standalone-lookup",
+    "prompt": "Show me GA4 traffic for /pricing.",
+    "assertions": [
+      {
+        "id": "routes-to-ga4",
+        "description": "Routes the request to the ga4 skill for a standalone metric lookup",
+        "weight": 3
+      },
+      {
+        "id": "no-cro-audit",
+        "description": "Does NOT trigger the CRO skill or produce a multi-section CRO audit report",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-gsc-standalone-query",
+    "prompt": "What are the top search queries and CTR for https://www.example.com/pricing in the last 28 days?",
+    "assertions": [
+      {
+        "id": "routes-to-gsc",
+        "description": "Routes to the google-search-console skill (or any GSC-capable skill) for a standalone query/CTR lookup",
+        "weight": 3
+      },
+      {
+        "id": "no-cro-audit",
+        "description": "Does NOT trigger the CRO skill despite the URL and date range — there is no audit/test/LIFT intent",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-copy-rewrite-standalone",
+    "prompt": "Rewrite the CTA on https://www.example.com/pricing to be more conversion-focused.",
+    "assertions": [
+      {
+        "id": "routes-to-voice",
+        "description": "Routes the one-off copy/CTA rewrite to the marketing-voice skill (context: landing_page)",
+        "weight": 3
+      },
+      {
+        "id": "no-cro-audit",
+        "description": "Does NOT trigger the CRO skill — an untethered copy rewrite is out of scope even though CRO can produce CTA variants inside a full audit or a focused CRO slice",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-headline-options-standalone",
+    "prompt": "Give me 3 headline options for https://www.example.com/pricing.",
+    "assertions": [
+      {
+        "id": "routes-to-voice",
+        "description": "Routes the standalone headline-variant ask to the marketing-voice skill",
+        "weight": 3
+      },
+      {
+        "id": "no-cro-audit",
+        "description": "Does NOT trigger the CRO skill — there is no audit, test-planning, LIFT, or hypothesis intent tying the headlines to a structured CRO workflow",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-no-url",
+    "prompt": "What are some general CRO tips for SaaS landing pages?",
+    "assertions": [
+      {
+        "id": "no-trigger",
+        "description": "Does NOT trigger the CRO skill — no URL and no specific page to audit; this is general marketing advice",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-email",
+    "prompt": "Give me 5 A/B test ideas for my welcome email subject line.",
+    "assertions": [
+      {
+        "id": "no-trigger",
+        "description": "Does NOT trigger the CRO skill — email subject-line testing is not landing-page CRO",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-brand",
+    "prompt": "Help me reposition our brand to feel more premium.",
+    "assertions": [
+      {
+        "id": "no-trigger",
+        "description": "Does NOT trigger the CRO skill — brand/positioning work, not landing-page conversion optimization",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "negative-ad-copy",
+    "prompt": "Write 5 Facebook ad headlines for a fitness app.",
+    "assertions": [
+      {
+        "id": "no-trigger",
+        "description": "Does NOT trigger the CRO skill — ad copy not tied to a specific landing page",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "any-domain-audit",
+    "prompt": "Audit https://shop.example.org/pricing for CRO.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Runs the CRO audit workflow for this page — the skill audits any public website, so it does not decline or route away because of the domain",
+        "weight": 3
+      },
+      {
+        "id": "audience-inferred",
+        "description": "Because references/audience-context.md is still a placeholder template (or describes a different business), states that the audience, value prop and conversion goal were inferred from the page itself rather than presenting them as known facts",
+        "weight": 2
+      },
+      {
+        "id": "website-host-scoping",
+        "description": "Treats this as a website page: if GA4 is used, scopes it with a hostName filter on the audited site's domain (shop.example.org / example.org) and the /pricing landing path, or states that GA4 is unavailable for this site — never reports unfiltered or another site's numbers",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "negative-non-public-host",
+    "prompt": "Audit http://localhost:3000/pricing for CRO.",
+    "assertions": [
+      {
+        "id": "no-cro-audit",
+        "description": "Does NOT run a CRO audit for this localhost URL — it is not a public web page. It does not produce the LIFT/PXL/report sections",
+        "weight": 3
+      },
+      {
+        "id": "states-public-pages-only",
+        "description": "States that the CRO skill audits public web pages and declines / stops (e.g. suggests deploying to a public or staging URL, or pasting the page HTML/screenshot)",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "my-subdomain-audit",
+    "prompt": "Why isn't https://app.example.com/features converting? Build a test backlog.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO skill for this app.example.com page — runs the LIFT + PXL + backlog workflow rather than declining or routing away",
+        "weight": 3
+      },
+      {
+        "id": "lift-pxl-backlog",
+        "description": "Includes a LIFT analysis, a PXL prioritization, and an experiment backlog of test ideas",
+        "weight": 2
+      },
+      {
+        "id": "website-host-scoping",
+        "description": "Treats this as a website page: scopes GA4 with a hostName-containing filter on the site's domain (example.com) (the App-Store decontamination filter), NOT the apps.shopify.com listing path",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "shopify-listing-audit",
+    "prompt": "Audit https://apps.shopify.com/example-app for CRO.",
+    "assertions": [
+      {
+        "id": "triggers-cro",
+        "description": "Triggers the CRO audit workflow for this Shopify App Store app listing",
+        "weight": 2
+      },
+      {
+        "id": "shopify-host-filter",
+        "description": "Scopes GA4 to hostName = apps.shopify.com for this listing audit, and does NOT apply a website-domain host filter (which would exclude the listing's own traffic and return near-zero)",
+        "weight": 3
+      },
+      {
+        "id": "no-gsc-for-listing",
+        "description": "Notes that GSC does not cover apps.shopify.com (the App Store listing is not in the Search Console property) — keeps the Traffic intent summary with a 'GSC does not cover the Shopify App Store listing' note rather than fabricating query data",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "profile-first-audit",
+    "prompt": "Audit https://www.example.com/pricing for CRO. There is no prior audit of this page.",
+    "assertions": [
+      {
+        "id": "writes-profile",
+        "description": "States that a structured page profile was written to profiles/<slug>.json alongside the markdown report, using the correct slug www-example-com-pricing",
+        "weight": 3
+      },
+      {
+        "id": "first-audit-shape",
+        "description": "Treats this as a first audit: history is empty and no changes_since_previous / deltas are claimed against a non-existent prior run",
+        "weight": 3
+      },
+      {
+        "id": "report-unchanged",
+        "description": "The markdown report itself contains no JSON, schema field names, or experiment IDs — the profile is a separate artifact",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-unknown-not-zero",
+    "prompt": "Audit https://www.example.com/pricing for CRO. No GA4, GSC or session-replay data is available.",
+    "assertions": [
+      {
+        "id": "criteria-null-not-false",
+        "description": "In the page profile, data-gated PXL criteria are recorded as null (unknown), NOT as false or 0 — false means 'checked, and no'; null means unmeasured",
+        "weight": 3
+      },
+      {
+        "id": "priority-null-heuristic",
+        "description": "Stores priority as null for heuristic-only scoring and does NOT assign a P0-P3 tier, in both the profile and the report's §5",
+        "weight": 3
+      },
+      {
+        "id": "scoring-mode-recorded",
+        "description": "Records scoring_mode as heuristic_only and carries the matching disclosure sentence in report §5",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-focused-slice-merge",
+    "prompt": "Run a LIFT review of https://www.example.com/pricing. A full audit of this page ran last month and wrote a profile.",
+    "assertions": [
+      {
+        "id": "merges-not-overwrites",
+        "description": "Updates only the lift block in latest and leaves pxl, metrics and page_snapshot as the prior full audit wrote them, keeping their older observed_in values rather than nulling them",
+        "weight": 3
+      },
+      {
+        "id": "history-nulls-unmeasured",
+        "description": "When the prior latest is demoted into history, blocks this run did not measure are stored as null with measured.<block> false — stale numbers are NOT copied forward under this run's audit_id",
+        "weight": 3
+      },
+      {
+        "id": "no-false-deltas",
+        "description": "Emits no metric deltas for blocks not measured this run; lists them in not_compared with a reason instead of reporting a delta of zero",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "profile-outcome-preservation",
+    "prompt": "We shipped the trust microcopy test on the pricing page and it won +8%. Now audit https://www.example.com/pricing for CRO.",
+    "assertions": [
+      {
+        "id": "records-reported-outcome",
+        "description": "Writes the reported outcome to that experiment with status_source user_reported, even though the settled test does not appear in this run's PXL ranking",
+        "weight": 3
+      },
+      {
+        "id": "does-not-repropose",
+        "description": "Does NOT propose the trust microcopy test again as a new test idea, and reflects it in the report's Prior context line",
+        "weight": 3
+      },
+      {
+        "id": "skill-cannot-set-outcome",
+        "description": "Does not invent any won/lost/shipped/running status for experiments the user did not report on — those stay at proposed/ready/blocked_by_engineering/needs_data",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-same-day-reaudit",
+    "prompt": "Audit https://www.example.com/pricing for CRO again — we already ran an audit of this page earlier today.",
+    "assertions": [
+      {
+        "id": "suffixes-audit-id",
+        "description": "Does not collide with the existing audit_id for today: suffixes it (e.g. 2026-07-23-2) rather than overwriting the earlier run",
+        "weight": 3
+      },
+      {
+        "id": "prior-run-into-history",
+        "description": "Pushes the earlier same-day run into history rather than discarding it",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-write-failure-non-fatal",
+    "prompt": "Audit https://www.example.com/pricing for CRO. You have no ability to write files in this session.",
+    "assertions": [
+      {
+        "id": "report-still-complete",
+        "description": "Still delivers the complete markdown report — a failed profile write does not invalidate or truncate the audit",
+        "weight": 3
+      },
+      {
+        "id": "says-write-failed",
+        "description": "States plainly that the profile could not be written, rather than silently omitting it or claiming it was saved",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "profile-corrupt-recovery",
+    "prompt": "Audit https://www.example.com/pricing for CRO. The existing profiles/www-example-com-pricing.json is truncated and no longer parses as JSON.",
+    "assertions": [
+      {
+        "id": "never-overwrites-corrupt",
+        "description": "Refuses to overwrite or repair the unparseable profile and does NOT treat it as a missing file / first audit — the corrupt file is the only record of prior audits and is left byte-for-byte intact",
+        "weight": 3
+      },
+      {
+        "id": "recovery-write-beside",
+        "description": "Writes this run's profile beside the canonical file through scripts/profile_store.py as a recovery write of kind 'corrupt', named profiles/<slug>.corrupt-<YYYYMMDD-HHMMSS>.json — a timestamp, NOT the run's audit_id — using exclusive creation and escalating with -2, -3 without a check-then-overwrite race",
+        "weight": 3
+      },
+      {
+        "id": "complete-recovery-profile",
+        "description": "The recovery JSON is a complete standalone current-run profile with schema_version, page, latest and audit_id, current experiments and engineering issues, and history: []; it omits changes_since_previous because the unsafe canonical file cannot be used as a comparison base",
+        "weight": 3
+      },
+      {
+        "id": "report-still-complete-and-footnoted",
+        "description": "Still delivers the complete markdown report and footnotes that the on-disk profile could not be parsed, was left untouched, and the run was saved beside it for manual reconciliation",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-unsupported-schema-version",
+    "prompt": "Audit https://www.example.com/pricing for CRO. The existing profiles/www-example-com-pricing.json is valid JSON but its schema_version is 2.0, newer than this skill supports.",
+    "assertions": [
+      {
+        "id": "not-treated-as-corrupt",
+        "description": "Treats the file as valid JSON written by a newer skill — explicitly NOT corrupt and NOT a parse failure — and does not rewrite it at the older schema version, which would strip fields the newer schema added",
+        "weight": 3
+      },
+      {
+        "id": "unsupported-version-recovery-kind",
+        "description": "Does a recovery write through scripts/profile_store.py of kind 'unsupported-version' (its own distinct filename, profiles/<slug>.unsupported-version-<timestamp>.json), preserving the canonical file byte-for-byte and using exclusive creation so an existing recovery file is never overwritten",
+        "weight": 3
+      },
+      {
+        "id": "complete-unsupported-recovery-profile",
+        "description": "The unsupported-version recovery JSON is a complete standalone current-run profile with a fresh audit_id and current longitudinal records, history: [], and no changes_since_previous claim against the newer canonical schema",
+        "weight": 3
+      },
+      {
+        "id": "footnotes-reconciliation",
+        "description": "Notes that the on-disk profile is a newer schema version this run cannot safely merge, so the run was saved beside it for a newer skill or manual reconciliation — and still delivers the full report",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-audit-status-reconciliation",
+    "prompt": "Re-audit https://www.example.com/pricing. The prior profile has exp-hero-copy with status_source audit and status blocked_by_engineering. The blocking fix has landed, and this run's Section 6 labels it Ready. A new exp-pricing-proof row is labelled Needs data.",
+    "assertions": [
+      {
+        "id": "refreshes-existing-audit-status",
+        "description": "Updates exp-hero-copy from blocked_by_engineering to ready because its status_source is audit and the current Section 6 label is Ready; it does not preserve the stale audit-owned status",
+        "weight": 3
+      },
+      {
+        "id": "persists-new-section-six-status",
+        "description": "Stores the new exp-pricing-proof experiment as needs_data with status_source audit, matching its current Section 6 row rather than always appending it as proposed",
+        "weight": 3
+      },
+      {
+        "id": "preserves-user-reported-state",
+        "description": "Explains that a user_reported status or outcome would remain untouched unless the user reported another change",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-engineering-check-proof",
+    "prompt": "Re-audit https://www.example.com/pricing. The profile has an open Lighthouse LCP issue with check_id lighthouse_lcp_budget and an open GA4 scroll-event issue with check_id ga4_scroll_event_presence. This run queried the GA4 scroll event and confirmed it now fires, but Lighthouse was not run.",
+    "assertions": [
+      {
+        "id": "records-exact-check",
+        "description": "Adds ga4_scroll_event_presence, but not lighthouse_lcp_budget, to latest.engineering_checks_run because only the exact GA4 check completed",
+        "weight": 3
+      },
+      {
+        "id": "fixes-only-rechecked-issue",
+        "description": "Marks the GA4 scroll-event issue fixed with resolved_in_audit set to this audit, while keeping the Lighthouse issue open because broad page access is not proof that its exact check ran",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "profile-legacy-schema-migration",
+    "prompt": "Audit https://www.example.com/pricing for CRO. The existing profiles/www-example-com-pricing.json is valid JSON at schema_version 1.0, written before engineering checks were tracked, and it lists one open Sev0 engineering issue.",
+    "assertions": [
+      {
+        "id": "migrates-not-recovers",
+        "description": "Treats the 1.0 profile as readable and migrates it forward to the current schema version — this is a lower version and a strict superset, NOT the unsupported-version recovery path, which is only for versions NEWER than the skill supports",
+        "weight": 3
+      },
+      {
+        "id": "checks-run-starts-empty",
+        "description": "Initialises latest.engineering_checks_run to an empty list rather than inferring it from which data layers were available or which issues were open, and stamps engineering_checks_run_observed_in with this run's audit_id",
+        "weight": 3
+      },
+      {
+        "id": "legacy-issue-stays-open",
+        "description": "Leaves the legacy engineering issue open through the migration and does NOT mark it fixed, even if this run did not re-detect it — the 1.0 file carries no evidence that its detecting check ever ran. It may assign the issue a stable check_id so a LATER audit can resolve it",
+        "weight": 3
+      }
+    ]
+  },
+  {
+    "id": "profile-focused-run-rebuilds-checks",
+    "prompt": "Run a LIFT review of https://www.example.com/pricing. A full audit last month completed several engineering checks and left one Sev0 issue open. You have no session-replay or GA4 access this time.",
+    "assertions": [
+      {
+        "id": "rebuilds-checks-run",
+        "description": "Writes latest.engineering_checks_run as an empty list for this run rather than carrying forward the previous full audit's check tokens, and stamps engineering_checks_run_observed_in with THIS run's audit_id",
+        "weight": 3
+      },
+      {
+        "id": "sev0-stays-open",
+        "description": "Leaves the prior Sev0 issue open — a focused run that completed none of its checks has no evidence of a fix, and broad layer availability is never proof",
+        "weight": 3
+      },
+      {
+        "id": "blocks-still-carried",
+        "description": "Still carries the three unmeasured blocks (page_snapshot, metrics, pxl) forward in latest with their older observed_in values while replacing only lift — the check list is the one part of latest that is rebuilt, not merged",
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "id": "profile-focused-run-delta-provenance",
+    "prompt": "Today is 2026-08-04. Run a LIFT-only review of https://www.example.com/pricing and show the exact history demotion plus changes_since_previous you would persist. The canonical latest is audit 2026-07-23, a metrics-only focused run: metrics.observed_in is 2026-07-23, while lift.observed_in and pxl.observed_in are both 2026-06-12. Its carried LIFT total is 15 with factors value_proposition=3, clarity=2, relevance=3, distraction=3, urgency=2, anxiety=2. The canonical history head is audit 2026-06-12 with measured.lift=true and that same LIFT total/factor set. This run measures only LIFT and produces total 18 with factors value_proposition=4, clarity=3, relevance=3, distraction=2, urgency=2, anxiety=4. It does not measure metrics or PXL.",
+    "assertions": [
+      {
+        "id": "exact-comparison-sources",
+        "description": "Sets compared_to exactly to 2026-07-23 and compared_against exactly to metrics:null, lift:2026-06-12, pxl:null. It skips the newly demoted 2026-07-23 LIFT because that focused run carried LIFT and therefore records measured.lift=false",
+        "weight": 3
+      },
+      {
+        "id": "exact-lift-deltas",
+        "description": "Emits lift_total_delta exactly 3 and all six lift_deltas exactly: value_proposition 1, clarity 1, relevance 0, distraction -1, urgency 0, anxiety 2",
+        "weight": 3
+      },
+      {
+        "id": "exact-focused-demotion",
+        "description": "Demotes audit 2026-07-23 at history[0] with measured.lift=false and lift:null because that audit carried the 2026-06-12 LIFT values; it does not launder those values under 2026-07-23",
+        "weight": 2
+      },
+      {
+        "id": "unmeasured-blocks-have-no-source-or-deltas",
+        "description": "Emits metric_deltas as {}, sets lift-independent PXL new/recurring/dropped lists to [], rank_changes to {}, and includes one metrics-prefixed and one pxl-prefixed not_compared reason; it reports no zero or other delta for either carried block",
+        "weight": 3
+      }
+    ]
+  }
+]
