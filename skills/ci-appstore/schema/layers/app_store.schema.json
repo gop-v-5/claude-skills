@@ -1,0 +1,314 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:ci-appstore:layers/app_store.schema.json",
+  "title": "App Store intelligence layer",
+  "description": "Domain shape for layers.app_store, owned by the ci-appstore skill. Validated in ADDITION to the envelope's common `meta` block (which is defined in competitor.schema.json). Everything here is observable on the public Shopify App Store listing, pricing, and review pages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "meta"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Common layer header — validated by the envelope schema; repeated loosely here so this file is usable standalone."
+    },
+    "listing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name_on_store": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name_strategy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "One line: how the app name is engineered (brand-led, category-exact keyword stuffing, etc.)."
+        },
+        "card_subtitle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtitle_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "badges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "e.g. ['Built for Shopify','Plus Certified']."
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "has_free_plan": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "free_includes_core_job": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether the free plan actually includes the core job merchants install this category of app for, not merely the app itself."
+        },
+        "trial_days": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "model_category": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "freemium-landgrab",
+            "premium-upmarket",
+            "penetration-meter",
+            "performance-no-free-tier",
+            null
+          ]
+        },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "monthly_usd": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "variable_fee": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "e.g. '+2% of attributed sales', 'order overages $10/100'."
+              },
+              "notes": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "variable_component": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Plain-language summary of what the variable charge is levied on."
+        },
+        "escalation_note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Any observed/suspected price or fee increase. Deeper longitudinal history belongs in a future `pricing` layer, not here."
+        }
+      }
+    },
+    "reviews": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rating": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "velocity_per_month": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Approx new reviews/month — the real differentiator once ratings compress at 4.8–5.0."
+        },
+        "complaint_themes": {
+          "type": "array",
+          "description": "Themes in 1–3★ reviews.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "theme": {
+                "type": "string"
+              },
+              "frequency": {
+                "type": "string",
+                "enum": [
+                  "prominent",
+                  "present",
+                  "absent"
+                ]
+              }
+            }
+          }
+        },
+        "praise_themes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "solicitation_note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Signs reviews are support-solicited/incentivized, which discounts raw counts."
+        }
+      }
+    },
+    "positioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "threat_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Short label, e.g. 'freemium land-grab — direct'."
+        },
+        "threat_level": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "High",
+            "Med",
+            "Low",
+            null
+          ]
+        },
+        "implied_positioning": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "One-line positioning statement inferred from the listing."
+        },
+        "how_they_win": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The strategy paragraph — feeds the 'How each competitor is trying to win' section of the report."
+        },
+        "trajectory": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "keyword_visibility": {
+      "type": "object",
+      "description": "App Store search rank per audited term. Key = term from config/competitors.yaml; value = integer rank, or null if not in the observed top set. Keep keys identical across competitors so render can build the grid.",
+      "additionalProperties": {
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "depth": {
+          "type": "object",
+          "description": "Depth per product dimension. Keys = depth_dimensions from config/competitors.yaml (e.g. the category's core job and its adjacent jobs); keep keys identical across profiles so the landscape table aligns.",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "Deep",
+              "Mid",
+              "Shallow",
+              "None",
+              null
+            ]
+          }
+        },
+        "matrix": {
+          "type": "object",
+          "description": "capability name -> verdict vs the baseline app: 'baseline_advantage' | 'parity' | 'competitor_advantage' | 'unknown' | 'irrelevant'. Keys = capability_rows from config; keep them identical across competitors so render can build the comparison grid.",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "baseline_advantage",
+              "parity",
+              "competitor_advantage",
+              "unknown",
+              "irrelevant"
+            ]
+          }
+        }
+      }
+    },
+    "merchandising": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "screenshot_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "narrative": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The story arc the screenshot gallery tells (e.g. 'collect -> display -> syndicate -> analyse')."
+        },
+        "hero_angle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

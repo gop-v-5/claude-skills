@@ -1,0 +1,78 @@
+# Competitive Intelligence — roster & audit config (FICTIONAL DEMO)
+# Every app, URL, price and review count in this demo is made up.
+# Read by the ci-appstore skill (collect stage) and scripts/render_report.py.
+
+baseline_slug: acme-reviews   # your own app — the profile every comparison is anchored to
+
+# --- Roster ------------------------------------------------------------------
+# slug MUST be stable & kebab-case (it is the profile filename and the join key).
+competitors:
+  - slug: acme-reviews
+    name: Acme Reviews
+    app_store_url: https://apps.shopify.com/example-acme-reviews
+    baseline: true
+    category_tags: [reviews, ugc]
+  - slug: globex-reviews
+    name: Globex Reviews
+    app_store_url: https://apps.shopify.com/example-globex-reviews
+    category_tags: [reviews, q-and-a]
+  - slug: initech-ratings
+    name: Initech Ratings
+    app_store_url: https://apps.shopify.com/example-initech-ratings
+    category_tags: [reviews]
+  - slug: umbrella-ugc
+    name: Umbrella UGC
+    app_store_url: https://apps.shopify.com/example-umbrella-ugc
+    category_tags: [ugc, reviews]
+
+# --- Keyword visibility audit -----------------------------------------------
+# App Store search rank per term for every app. Keep stable across refreshes.
+keyword_audit:
+  - product reviews
+  - photo reviews
+  - review app
+  - star ratings
+  - ugc
+  - q&a
+
+# --- Depth dimensions ----------------------------------------------------------
+# Keys for layers.app_store.capabilities.depth (Deep | Mid | Shallow | None):
+# the category's core job plus the adjacent jobs apps bundle with it.
+depth_dimensions:
+  - reviews
+  - ugc
+  - q_and_a
+
+# --- Capability matrix rows ----------------------------------------------------
+# Keys for layers.app_store.capabilities.matrix. Each competitor gets a verdict vs the
+# baseline: baseline_advantage | parity | competitor_advantage | unknown | irrelevant.
+capability_rows:
+  - photo_video_reviews
+  - review_request_automation
+  - google_shopping_sync
+  - q_and_a
+  - import_from_other_apps
+  - ai_review_summaries
+  - multilingual
+  - shopify_native_surfaces
+
+# --- Scoring rubric weights ----------------------------------------------------
+# render_report.py computes weighted scores from each profile's 1–5 sub-scores.
+scoring:
+  merchant_decision:            # View 1 — what a merchant comparing apps perceives
+    price_perception: 0.25
+    social_proof: 0.20
+    breadth_for_job: 0.20
+    ease_support: 0.20
+    trust: 0.15
+  strategic_strength:           # View 2 — capability + momentum + distribution
+    product_depth: 0.30
+    distribution: 0.25
+    momentum: 0.20
+    backing: 0.15
+    ecosystem: 0.10
+
+# --- Refresh policy --------------------------------------------------------------
+refresh:
+  stale_after_days: 90          # claims older than this must be re-fetched or marked stale
+  report_slug: appstore         # reports/<date>-<report_slug>.md

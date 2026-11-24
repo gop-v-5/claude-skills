@@ -1,0 +1,260 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:ci-appstore:competitor.schema.json",
+  "title": "Competitor Intelligence Profile (envelope)",
+  "description": "The single source of truth for one app in a Competitive Intelligence profile set. This is a STABLE ENVELOPE, not a report: identity, a cross-cutting provenance ledger, synthesized scores, and an open `layers` map. Each intelligence domain (App Store, pricing, ad creative, SEO, sentiment, tech stack, AI visibility, ...) is a self-contained LAYER with its own schema in schema/layers/<id>.schema.json, registered in schema/layers/registry.json. A skill owns one or more layers and writes only into layers.<id>. Adding a new layer never edits this file and never invalidates existing profiles — that is the whole point of the design. The ci-appstore skill populates layers.app_store; future skills can populate the rest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "slug",
+    "identity",
+    "last_updated",
+    "layers",
+    "layers_populated",
+    "claims"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Version of THIS envelope. Layers version independently via their own layer_version — so a layer can evolve without bumping the envelope."
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Stable kebab-case id; MUST equal the filename (profiles/<slug>.json). The join key across refreshes and across every CI skill. Never change it."
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date of the most recent write to this profile by any skill."
+    },
+    "is_baseline": {
+      "type": "boolean",
+      "description": "True only for your own app's profile (the baseline), which anchors every comparison. Default false."
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Parent company / publisher of the app."
+        },
+        "app_store_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "app_store_slug": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The apps.shopify.com/<slug> path — sometimes reveals keyword strategy (e.g. a category keyword in the handle)."
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "category_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "e.g. ['reviews','ugc','q-and-a']."
+        }
+      }
+    },
+    "layers": {
+      "type": "object",
+      "description": "The extensibility point. Keys are layer ids from schema/layers/registry.json (e.g. 'app_store', 'pricing', 'ad_creative'). Each value is a layer object that MUST carry a `meta` block (validated here) plus its own domain fields (validated against that layer's schema by scripts/validate_profiles.py). An unknown/planned layer is simply absent — never a null placeholder, never a schema change.",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "meta"
+        ],
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "layer_id",
+              "collected_by",
+              "collected_at",
+              "layer_version",
+              "status"
+            ],
+            "description": "Common header every layer carries, so the platform can reason about any layer uniformly (who wrote it, when, how fresh) without knowing its domain.",
+            "properties": {
+              "layer_id": {
+                "type": "string",
+                "pattern": "^[a-z0-9_]+$",
+                "description": "Must match the key in `layers` and an entry in registry.json."
+              },
+              "collected_by": {
+                "type": "string",
+                "description": "Skill that owns this layer, e.g. 'ci-appstore'."
+              },
+              "collected_at": {
+                "type": "string",
+                "format": "date"
+              },
+              "layer_version": {
+                "type": "string",
+                "description": "Version of the layer schema this data conforms to."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "populated",
+                  "partial",
+                  "stale"
+                ],
+                "description": "populated = fully collected; partial = some fields pending; stale = past the refresh horizon, re-collect before trusting."
+              }
+            }
+          }
+        }
+      }
+    },
+    "layers_populated": {
+      "type": "array",
+      "description": "Denormalized list of layer ids present in `layers`, for cheap discovery ('which competitors have ad_creative data?') without opening every profile. Keep in sync with the keys of `layers`.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+$"
+      },
+      "uniqueItems": true
+    },
+    "scores": {
+      "type": "object",
+      "description": "Cross-cutting analyst scores synthesized from whatever layers are present (1–5). Kept in the envelope, not a layer, because they are a view ACROSS layers. Weighted values are computed by scripts, not hand-entered, so weights stay consistent across competitors. Extend with new named views as more layers land.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "Unified provenance ledger for the WHOLE profile — every load-bearing fact from every layer, each tagged with its `layer`. This is what makes the platform trustworthy: on refresh, unchanged claims are trusted, 'stale' claims re-fetched, 'refuted' claims kept so they can't creep back in. One ledger (not per-layer) so cross-layer facts and de-duplication stay simple.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "statement",
+          "verification"
+        ],
+        "properties": {
+          "layer": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Layer id this claim supports, or null for envelope-level facts (identity, scores)."
+          },
+          "field": {
+            "type": "string",
+            "description": "Dotted path the claim backs, e.g. 'layers.app_store.pricing.tiers[0].monthly_usd'."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The fact in one sentence, as a human would read it."
+          },
+          "source_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Free-form but prefer a stable vocabulary, e.g. 'app_store_listing', 'app_store_reviews', 'vendor_site', 'wayback', 'meta_ad_library', 'g2', 'analyst_inference'."
+          },
+          "fetched": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "verification": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "unverified",
+              "refuted",
+              "stale"
+            ],
+            "description": "verified = independently corroborated; unverified = single-source, believed true; refuted = checked and false (kept deliberately); stale = past the refresh horizon."
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "high",
+              "med",
+              "low",
+              null
+            ]
+          },
+          "verifier_notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "refresh_history": {
+      "type": "array",
+      "description": "Append one entry each time any layer is re-collected, so change-over-time is auditable without a separate log.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date",
+          "layer"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "layer": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string",
+            "description": "What materially changed since the prior snapshot (price move, review jump, new complaint theme)."
+          }
+        }
+      }
+    }
+  }
+}

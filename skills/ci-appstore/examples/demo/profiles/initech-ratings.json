@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0",
+  "slug": "initech-ratings",
+  "last_updated": "2026-09-01",
+  "is_baseline": false,
+  "identity": {
+    "name": "Initech Ratings",
+    "vendor": "Initech (fictional)",
+    "app_store_url": "https://apps.shopify.com/example-initech-ratings",
+    "app_store_slug": "example-initech-ratings",
+    "website": "https://initech-ratings.example.com",
+    "category_tags": [
+      "reviews"
+    ]
+  },
+  "layers": {
+    "app_store": {
+      "meta": {
+        "layer_id": "app_store",
+        "collected_by": "ci-appstore",
+        "collected_at": "2026-09-01",
+        "layer_version": "1.0",
+        "status": "populated"
+      },
+      "listing": {
+        "name_on_store": "Initech Ratings",
+        "name_strategy": "brand-led",
+        "card_subtitle": "Simple star ratings",
+        "subtitle_strategy": "brand-led",
+        "badges": []
+      },
+      "pricing": {
+        "has_free_plan": true,
+        "free_includes_core_job": true,
+        "trial_days": null,
+        "model_category": "penetration-meter",
+        "tiers": [
+          {
+            "name": "Free",
+            "monthly_usd": null,
+            "variable_fee": null,
+            "notes": null
+          },
+          {
+            "name": "Plus",
+            "monthly_usd": 9,
+            "variable_fee": "+$5 per 100 extra requests",
+            "notes": null
+          }
+        ],
+        "variable_component": "Review-request emails above the plan allowance.",
+        "escalation_note": null
+      },
+      "reviews": {
+        "rating": 4.9,
+        "count": 610,
+        "velocity_per_month": 30,
+        "complaint_themes": [
+          {
+            "theme": "Few customization options",
+            "frequency": "prominent"
+          }
+        ],
+        "praise_themes": [
+          "cheap",
+          "easy setup"
+        ],
+        "solicitation_note": null
+      },
+      "positioning": {
+        "threat_type": "low-price challenger — indirect",
+        "threat_level": "Med",
+        "implied_positioning": "Star ratings without the bloat.",
+        "how_they_win": "Wins price-sensitive new stores with a near-free plan and a one-click install.",
+        "trajectory": "flat"
+      },
+      "keyword_visibility": {
+        "product reviews": 7,
+        "photo reviews": null,
+        "review app": 4,
+        "star ratings": 2,
+        "ugc": null,
+        "q&a": null
+      },
+      "capabilities": {
+        "depth": {
+          "reviews": "Mid",
+          "ugc": "None",
+          "q_and_a": "None"
+        },
+        "matrix": {
+          "photo_video_reviews": "baseline_advantage",
+          "review_request_automation": "parity",
+          "google_shopping_sync": "irrelevant",
+          "q_and_a": "parity",
+          "import_from_other_apps": "competitor_advantage",
+          "ai_review_summaries": "baseline_advantage",
+          "multilingual": "parity",
+          "shopify_native_surfaces": "parity"
+        }
+      },
+      "merchandising": {
+        "screenshot_count": 4,
+        "narrative": "install -> show stars",
+        "hero_angle": "one-click setup"
+      }
+    }
+  },
+  "layers_populated": [
+    "app_store"
+  ],
+  "scores": {
+    "merchant_decision": {
+      "price_perception": 5,
+      "social_proof": 3,
+      "breadth_for_job": 2,
+      "ease_support": 4,
+      "trust": 3
+    },
+    "strategic_strength": {
+      "product_depth": 2,
+      "distribution": 2,
+      "momentum": 2,
+      "backing": 2,
+      "ecosystem": 2
+    }
+  },
+  "claims": [
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.has_free_plan",
+      "statement": "Initech Ratings has free plan.",
+      "source_url": "https://apps.shopify.com/example-initech-ratings#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[0].monthly_usd",
+      "statement": "Initech Ratings Free plan is free.",
+      "source_url": "https://apps.shopify.com/example-initech-ratings#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[1].monthly_usd",
+      "statement": "Initech Ratings Plus plan is $9/month.",
+      "source_url": "https://apps.shopify.com/example-initech-ratings#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.rating",
+      "statement": "Initech Ratings is rated 4.9★.",
+      "source_url": "https://apps.shopify.com/example-initech-ratings/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.count",
+      "statement": "Initech Ratings has 610 reviews.",
+      "source_url": "https://apps.shopify.com/example-initech-ratings/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.keyword_visibility.product reviews",
+      "statement": "Initech Ratings ranks #7 for 'product reviews'.",
+      "source_url": "https://apps.shopify.com/search?q=product+reviews",
+      "source_type": "app_store_search",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    },
+    {
+      "layer": null,
+      "field": "scores.merchant_decision",
+      "statement": "Initech Ratings merchant-decision sub-scores are analyst judgments from the collected listing evidence.",
+      "source_url": null,
+      "source_type": "analyst_inference",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    }
+  ],
+  "refresh_history": [
+    {
+      "date": "2026-08-01",
+      "layer": "app_store",
+      "notes": "First collection."
+    },
+    {
+      "date": "2026-09-01",
+      "layer": "app_store",
+      "notes": "Reviews +90."
+    }
+  ]
+}

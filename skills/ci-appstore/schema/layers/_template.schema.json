@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:ci-appstore:layers/LAYER_ID.schema.json",
+  "title": "TITLE intelligence layer",
+  "description": "Domain shape for layers.LAYER_ID, owned by the SKILL_NAME skill. Copy this file to schema/layers/<id>.schema.json, fill in the domain fields below, then register the layer in schema/layers/registry.json (status 'active', point owner_skill + schema at it). The envelope (competitor.schema.json) does not change — that is the contract that keeps every existing profile valid when a new layer is added.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "meta"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Common layer header (layer_id, collected_by, collected_at, layer_version, status) — validated by the envelope schema."
+    }
+  },
+  "$comment": "Add your domain-specific properties alongside `meta`. Prefer typed enums for anything that appears in a rendered table, keep list-of-competitors keys identical across profiles so tables align, and register every load-bearing fact as a claim in the envelope's `claims` array (with layer set to this layer's id)."
+}

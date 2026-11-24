@@ -1,0 +1,219 @@
+{
+  "schema_version": "1.0",
+  "slug": "umbrella-ugc",
+  "last_updated": "2026-09-01",
+  "is_baseline": false,
+  "identity": {
+    "name": "Umbrella UGC",
+    "vendor": "Umbrella Corp (fictional)",
+    "app_store_url": "https://apps.shopify.com/example-umbrella-ugc",
+    "app_store_slug": "example-umbrella-ugc",
+    "website": "https://umbrella-ugc.example.com",
+    "category_tags": [
+      "ugc",
+      "reviews"
+    ]
+  },
+  "layers": {
+    "app_store": {
+      "meta": {
+        "layer_id": "app_store",
+        "collected_by": "ci-appstore",
+        "collected_at": "2026-09-01",
+        "layer_version": "1.0",
+        "status": "populated"
+      },
+      "listing": {
+        "name_on_store": "Umbrella UGC: Shoppable Videos",
+        "name_strategy": "format keyword + benefit",
+        "card_subtitle": "Turn reviews into shoppable video",
+        "subtitle_strategy": "format-led",
+        "badges": [
+          "Built for Shopify"
+        ]
+      },
+      "pricing": {
+        "has_free_plan": false,
+        "free_includes_core_job": null,
+        "trial_days": 14,
+        "model_category": "performance-no-free-tier",
+        "tiers": [
+          {
+            "name": "Creator",
+            "monthly_usd": 29,
+            "variable_fee": "+1% of attributed sales",
+            "notes": null
+          },
+          {
+            "name": "Studio",
+            "monthly_usd": 99,
+            "variable_fee": "+0.5% of attributed sales",
+            "notes": null
+          }
+        ],
+        "variable_component": "A share of sales attributed to shoppable videos.",
+        "escalation_note": null
+      },
+      "reviews": {
+        "rating": 4.7,
+        "count": 880,
+        "velocity_per_month": 60,
+        "complaint_themes": [
+          {
+            "theme": "Attribution numbers look inflated",
+            "frequency": "present"
+          },
+          {
+            "theme": "Video uploads fail on mobile",
+            "frequency": "present"
+          }
+        ],
+        "praise_themes": [
+          "video looks great",
+          "conversion lift"
+        ],
+        "solicitation_note": null
+      },
+      "positioning": {
+        "threat_type": "adjacent UGC play — indirect",
+        "threat_level": "Med",
+        "implied_positioning": "Reviews as shoppable content.",
+        "how_they_win": "Reframes reviews as video content and charges on attributed sales, so it never competes on price.",
+        "trajectory": "rising"
+      },
+      "keyword_visibility": {
+        "product reviews": null,
+        "photo reviews": 3,
+        "review app": null,
+        "star ratings": null,
+        "ugc": 1,
+        "q&a": null
+      },
+      "capabilities": {
+        "depth": {
+          "reviews": "Mid",
+          "ugc": "Deep",
+          "q_and_a": "None"
+        },
+        "matrix": {
+          "photo_video_reviews": "competitor_advantage",
+          "review_request_automation": "parity",
+          "google_shopping_sync": "irrelevant",
+          "q_and_a": "parity",
+          "import_from_other_apps": "baseline_advantage",
+          "ai_review_summaries": "competitor_advantage",
+          "multilingual": "parity",
+          "shopify_native_surfaces": "competitor_advantage"
+        }
+      },
+      "merchandising": {
+        "screenshot_count": 7,
+        "narrative": "capture -> edit -> shop",
+        "hero_angle": "shoppable video carousel"
+      }
+    }
+  },
+  "layers_populated": [
+    "app_store"
+  ],
+  "scores": {
+    "merchant_decision": {
+      "price_perception": 3,
+      "social_proof": 3,
+      "breadth_for_job": 3,
+      "ease_support": 3,
+      "trust": 3
+    },
+    "strategic_strength": {
+      "product_depth": 4,
+      "distribution": 3,
+      "momentum": 4,
+      "backing": 3,
+      "ecosystem": 3
+    }
+  },
+  "claims": [
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.has_free_plan",
+      "statement": "Umbrella UGC has no free plan.",
+      "source_url": "https://apps.shopify.com/example-umbrella-ugc#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[0].monthly_usd",
+      "statement": "Umbrella UGC Creator plan is $29/month.",
+      "source_url": "https://apps.shopify.com/example-umbrella-ugc#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[1].monthly_usd",
+      "statement": "Umbrella UGC Studio plan is $99/month.",
+      "source_url": "https://apps.shopify.com/example-umbrella-ugc#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.rating",
+      "statement": "Umbrella UGC is rated 4.7★.",
+      "source_url": "https://apps.shopify.com/example-umbrella-ugc/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.count",
+      "statement": "Umbrella UGC has 880 reviews.",
+      "source_url": "https://apps.shopify.com/example-umbrella-ugc/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.keyword_visibility.photo reviews",
+      "statement": "Umbrella UGC ranks #3 for 'photo reviews'.",
+      "source_url": "https://apps.shopify.com/search?q=photo+reviews",
+      "source_type": "app_store_search",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    },
+    {
+      "layer": null,
+      "field": "scores.merchant_decision",
+      "statement": "Umbrella UGC merchant-decision sub-scores are analyst judgments from the collected listing evidence.",
+      "source_url": null,
+      "source_type": "analyst_inference",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    }
+  ],
+  "refresh_history": [
+    {
+      "date": "2026-08-01",
+      "layer": "app_store",
+      "notes": "First collection."
+    },
+    {
+      "date": "2026-09-01",
+      "layer": "app_store",
+      "notes": "New complaint theme: mobile video uploads."
+    }
+  ]
+}

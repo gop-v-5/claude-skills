@@ -20,6 +20,14 @@ Runs a conversion-rate-optimization audit on any public landing page or Shopify 
 - **What it needs:** nothing beyond Claude Code. Optional: fill in `references/audience-context.md` with your audience and offer, and connect your own GA4 / Search Console skills for live data. Without them it runs on the page alone and labels the report heuristic-only.
 - **Status:** complete. `python3 skills/cro/evals/validate_docs.py` runs the built-in consistency and profile-store checks with no model calls.
 
+### [`ci-appstore`](skills/ci-appstore/)
+
+Shopify App Store competitive intelligence: researches the apps you compete with into one structured, versioned profile per app (listing, pricing, reviews, keyword ranks, capabilities), verifies every fact against its source, and renders a 12-section report plus a "what changed since last time" diff from that data.
+
+- **Why I built it:** competitor research usually ends as a slide deck that's stale a month later and can't be compared with the next one. Keeping the facts as data, each with a source and a verification state, means a refresh shows exactly what moved and every number in the report can be traced back.
+- **What it needs:** Claude Code, plus Python 3 with `jsonschema` and `pyyaml` for the scripts. A fully fictional demo data set ships with it, so you can render a report and a diff without doing any research.
+- **Status:** complete for the App Store layer; the profile format is built so further layers (pricing history, ad creative, SEO, ...) can be added without migrations.
+
 ### [`ad-fatigue-detection`](skills/ad-fatigue-detection/)
 
 Scores Meta (Facebook/Instagram) ads for creative fatigue from daily per-ad trends, explains why an ad is fatiguing, and recommends the next action. Read-only: it never edits or pauses ads.
@@ -38,6 +46,7 @@ cd claude-skills
 mkdir -p ~/.claude/skills
 ln -s "$PWD/skills/schema-markup"        ~/.claude/skills/schema-markup
 ln -s "$PWD/skills/cro"                  ~/.claude/skills/cro
+ln -s "$PWD/skills/ci-appstore"          ~/.claude/skills/ci-appstore
 ln -s "$PWD/skills/ad-fatigue-detection" ~/.claude/skills/ad-fatigue-detection
 ```
 
@@ -50,6 +59,7 @@ Each skill's own `SKILL.md` / `README.md` covers its setup (for example copying 
 ```bash
 cd skills/ad-fatigue-detection && pip3 install -r requirements.txt && python3 -m pytest -q
 cd ../cro && python3 evals/validate_docs.py
+cd ../ci-appstore && pip3 install -r requirements.txt && python3 tests/test_ci_appstore.py
 ```
 
 ## Licence

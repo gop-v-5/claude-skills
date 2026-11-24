@@ -1,0 +1,40 @@
+{
+  "landscape_summary": [
+    "Globex owns the upmarket suite position and is raising prices.",
+    "Initech wins on price; Umbrella sidesteps price by charging on attributed sales."
+  ],
+  "whitespace": [
+    "No app pairs a free plan that includes review requests with Google Shopping sync."
+  ],
+  "threat_radar": [
+    {
+      "item": "Globex price increase",
+      "type": "opportunity",
+      "level": "High"
+    },
+    {
+      "item": "Umbrella shoppable video",
+      "type": "threat",
+      "level": "Med"
+    }
+  ],
+  "backlog": {
+    "d0_30": [
+      "Add a 'switch from Globex' import path and mention it on the listing."
+    ],
+    "m1_3": [
+      "Ship Google Shopping sync on the Growth plan."
+    ],
+    "m3_12": [
+      "Explore a video-review format to blunt Umbrella."
+    ]
+  },
+  "recommended_strategy": [
+    "Hold the free plan, target Globex's price-sensitive mid-market merchants."
+  ],
+  "battlecard_counters": {
+    "globex-reviews": "Same core features for less — and the free plan actually sends review requests.",
+    "initech-ratings": "Photo and video reviews when a store outgrows plain stars.",
+    "umbrella-ugc": "Flat pricing: no cut of your sales."
+  }
+}

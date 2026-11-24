@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0",
+  "slug": "acme-reviews",
+  "last_updated": "2026-09-01",
+  "is_baseline": true,
+  "identity": {
+    "name": "Acme Reviews",
+    "vendor": "Acme Corp (fictional)",
+    "app_store_url": "https://apps.shopify.com/example-acme-reviews",
+    "app_store_slug": "example-acme-reviews",
+    "website": "https://acme-reviews.example.com",
+    "category_tags": [
+      "reviews",
+      "ugc"
+    ]
+  },
+  "layers": {
+    "app_store": {
+      "meta": {
+        "layer_id": "app_store",
+        "collected_by": "ci-appstore",
+        "collected_at": "2026-09-01",
+        "layer_version": "1.0",
+        "status": "populated"
+      },
+      "listing": {
+        "name_on_store": "Acme Reviews: Photo & Video",
+        "name_strategy": "brand + format keywords",
+        "card_subtitle": "Collect photo reviews on autopilot",
+        "subtitle_strategy": "outcome-led",
+        "badges": [
+          "Built for Shopify"
+        ]
+      },
+      "pricing": {
+        "has_free_plan": true,
+        "free_includes_core_job": true,
+        "trial_days": 14,
+        "model_category": "freemium-landgrab",
+        "tiers": [
+          {
+            "name": "Free",
+            "monthly_usd": null,
+            "variable_fee": null,
+            "notes": "50 review requests/month"
+          },
+          {
+            "name": "Growth",
+            "monthly_usd": 19,
+            "variable_fee": null,
+            "notes": null
+          },
+          {
+            "name": "Pro",
+            "monthly_usd": 59,
+            "variable_fee": null,
+            "notes": null
+          }
+        ],
+        "variable_component": null,
+        "escalation_note": null
+      },
+      "reviews": {
+        "rating": 4.8,
+        "count": 1240,
+        "velocity_per_month": 45,
+        "complaint_themes": [
+          {
+            "theme": "Widget slows the product page",
+            "frequency": "present"
+          },
+          {
+            "theme": "Email templates hard to customize",
+            "frequency": "present"
+          }
+        ],
+        "praise_themes": [
+          "fast support",
+          "photo reviews look good"
+        ],
+        "solicitation_note": null
+      },
+      "positioning": {
+        "threat_type": null,
+        "threat_level": null,
+        "implied_positioning": "The easy photo-review app for growing stores.",
+        "how_they_win": null,
+        "trajectory": "steady"
+      },
+      "keyword_visibility": {
+        "product reviews": 3,
+        "photo reviews": 2,
+        "review app": 6,
+        "star ratings": 5,
+        "ugc": 4,
+        "q&a": null
+      },
+      "capabilities": {
+        "depth": {
+          "reviews": "Deep",
+          "ugc": "Mid",
+          "q_and_a": "None"
+        },
+        "matrix": {}
+      },
+      "merchandising": {
+        "screenshot_count": 6,
+        "narrative": "collect -> display -> grow",
+        "hero_angle": "photo reviews on the product page"
+      }
+    }
+  },
+  "layers_populated": [
+    "app_store"
+  ],
+  "scores": {
+    "merchant_decision": {
+      "price_perception": 4,
+      "social_proof": 4,
+      "breadth_for_job": 3,
+      "ease_support": 4,
+      "trust": 4
+    },
+    "strategic_strength": {
+      "product_depth": 3,
+      "distribution": 3,
+      "momentum": 3,
+      "backing": 2,
+      "ecosystem": 3
+    }
+  },
+  "claims": [
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.has_free_plan",
+      "statement": "Acme Reviews has free plan.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[0].monthly_usd",
+      "statement": "Acme Reviews Free plan is free.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[1].monthly_usd",
+      "statement": "Acme Reviews Growth plan is $19/month.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[2].monthly_usd",
+      "statement": "Acme Reviews Pro plan is $59/month.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.rating",
+      "statement": "Acme Reviews is rated 4.8★.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.count",
+      "statement": "Acme Reviews has 1240 reviews.",
+      "source_url": "https://apps.shopify.com/example-acme-reviews/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.keyword_visibility.product reviews",
+      "statement": "Acme Reviews ranks #3 for 'product reviews'.",
+      "source_url": "https://apps.shopify.com/search?q=product+reviews",
+      "source_type": "app_store_search",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    },
+    {
+      "layer": null,
+      "field": "scores.merchant_decision",
+      "statement": "Acme Reviews merchant-decision sub-scores are analyst judgments from the collected listing evidence.",
+      "source_url": null,
+      "source_type": "analyst_inference",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    }
+  ],
+  "refresh_history": [
+    {
+      "date": "2026-08-01",
+      "layer": "app_store",
+      "notes": "First collection."
+    },
+    {
+      "date": "2026-09-01",
+      "layer": "app_store",
+      "notes": "Monthly refresh."
+    }
+  ]
+}

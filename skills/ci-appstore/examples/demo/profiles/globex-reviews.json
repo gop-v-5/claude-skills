@@ -1,0 +1,247 @@
+{
+  "schema_version": "1.0",
+  "slug": "globex-reviews",
+  "last_updated": "2026-09-01",
+  "is_baseline": false,
+  "identity": {
+    "name": "Globex Reviews",
+    "vendor": "Globex Corporation (fictional)",
+    "app_store_url": "https://apps.shopify.com/example-globex-reviews",
+    "app_store_slug": "example-globex-reviews",
+    "website": "https://globex-reviews.example.com",
+    "category_tags": [
+      "reviews",
+      "q-and-a"
+    ]
+  },
+  "layers": {
+    "app_store": {
+      "meta": {
+        "layer_id": "app_store",
+        "collected_by": "ci-appstore",
+        "collected_at": "2026-09-01",
+        "layer_version": "1.0",
+        "status": "populated"
+      },
+      "listing": {
+        "name_on_store": "Globex Product Reviews & Q&A",
+        "name_strategy": "category-exact keyword stuffing",
+        "card_subtitle": "Reviews, Q&A and Google stars",
+        "subtitle_strategy": "feature list",
+        "badges": [
+          "Built for Shopify",
+          "Plus certified"
+        ]
+      },
+      "pricing": {
+        "has_free_plan": true,
+        "free_includes_core_job": false,
+        "trial_days": 7,
+        "model_category": "premium-upmarket",
+        "tiers": [
+          {
+            "name": "Starter",
+            "monthly_usd": null,
+            "variable_fee": null,
+            "notes": "display only"
+          },
+          {
+            "name": "Business",
+            "monthly_usd": 49,
+            "variable_fee": null,
+            "notes": null
+          },
+          {
+            "name": "Enterprise",
+            "monthly_usd": 299,
+            "variable_fee": null,
+            "notes": null
+          }
+        ],
+        "variable_component": null,
+        "escalation_note": "Business tier rose from $39 to $49 between snapshots."
+      },
+      "reviews": {
+        "rating": 4.6,
+        "count": 3410,
+        "velocity_per_month": 120,
+        "complaint_themes": [
+          {
+            "theme": "Price increases",
+            "frequency": "prominent"
+          },
+          {
+            "theme": "Widget slows the product page",
+            "frequency": "present"
+          }
+        ],
+        "praise_themes": [
+          "Google Shopping integration",
+          "Q&A"
+        ],
+        "solicitation_note": "Several reviews mention a support agent asking for the review."
+      },
+      "positioning": {
+        "threat_type": "upmarket suite — direct",
+        "threat_level": "High",
+        "implied_positioning": "The all-in-one reviews suite for serious brands.",
+        "how_they_win": "Bundles reviews, Q&A and Google Shopping stars, then moves merchants up to enterprise tiers.",
+        "trajectory": "rising"
+      },
+      "keyword_visibility": {
+        "product reviews": 1,
+        "photo reviews": 4,
+        "review app": 2,
+        "star ratings": 1,
+        "ugc": null,
+        "q&a": 1
+      },
+      "capabilities": {
+        "depth": {
+          "reviews": "Deep",
+          "ugc": "Shallow",
+          "q_and_a": "Deep"
+        },
+        "matrix": {
+          "photo_video_reviews": "parity",
+          "review_request_automation": "competitor_advantage",
+          "google_shopping_sync": "competitor_advantage",
+          "q_and_a": "competitor_advantage",
+          "import_from_other_apps": "parity",
+          "ai_review_summaries": "unknown",
+          "multilingual": "competitor_advantage",
+          "shopify_native_surfaces": "parity"
+        }
+      },
+      "merchandising": {
+        "screenshot_count": 8,
+        "narrative": "collect -> answer -> syndicate -> analyse",
+        "hero_angle": "Google stars in search results"
+      }
+    }
+  },
+  "layers_populated": [
+    "app_store"
+  ],
+  "scores": {
+    "merchant_decision": {
+      "price_perception": 2,
+      "social_proof": 5,
+      "breadth_for_job": 5,
+      "ease_support": 3,
+      "trust": 4
+    },
+    "strategic_strength": {
+      "product_depth": 5,
+      "distribution": 4,
+      "momentum": 4,
+      "backing": 4,
+      "ecosystem": 4
+    }
+  },
+  "claims": [
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.has_free_plan",
+      "statement": "Globex Reviews has free plan.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[0].monthly_usd",
+      "statement": "Globex Reviews Starter plan is free.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[1].monthly_usd",
+      "statement": "Globex Reviews Business plan is $49/month.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[2].monthly_usd",
+      "statement": "Globex Reviews Enterprise plan is $299/month.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews#pricing",
+      "source_type": "app_store_listing",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.rating",
+      "statement": "Globex Reviews is rated 4.6★.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.reviews.count",
+      "statement": "Globex Reviews has 3410 reviews.",
+      "source_url": "https://apps.shopify.com/example-globex-reviews/reviews",
+      "source_type": "app_store_reviews",
+      "fetched": "2026-09-01",
+      "verification": "verified",
+      "confidence": "high"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.keyword_visibility.product reviews",
+      "statement": "Globex Reviews ranks #1 for 'product reviews'.",
+      "source_url": "https://apps.shopify.com/search?q=product+reviews",
+      "source_type": "app_store_search",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    },
+    {
+      "layer": null,
+      "field": "scores.merchant_decision",
+      "statement": "Globex Reviews merchant-decision sub-scores are analyst judgments from the collected listing evidence.",
+      "source_url": null,
+      "source_type": "analyst_inference",
+      "fetched": "2026-09-01",
+      "verification": "unverified",
+      "confidence": "med"
+    },
+    {
+      "layer": "app_store",
+      "field": "layers.app_store.pricing.tiers[0].monthly_usd",
+      "statement": "Globex Starter plan costs $15/month (third-party listicle).",
+      "source_url": "https://blog.example.com/best-review-apps",
+      "source_type": "listicle",
+      "fetched": "2026-09-01",
+      "verification": "refuted",
+      "confidence": "low",
+      "verifier_notes": "The listing shows Starter as free (display only); the listicle is out of date."
+    }
+  ],
+  "refresh_history": [
+    {
+      "date": "2026-08-01",
+      "layer": "app_store",
+      "notes": "First collection."
+    },
+    {
+      "date": "2026-09-01",
+      "layer": "app_store",
+      "notes": "Business tier $39 -> $49; reviews +360."
+    }
+  ]
+}

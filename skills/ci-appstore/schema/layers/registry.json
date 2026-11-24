@@ -1,0 +1,78 @@
+{
+  "registry_version": "1.0",
+  "description": "Catalog of intelligence layers. Each profile (profiles/<slug>.json) is an envelope (schema/competitor.schema.json) whose `layers` map is populated one layer at a time by the skill that owns it. To add a new intelligence domain: (1) flip its entry here from 'planned' to 'active' (or add one), (2) drop schema/layers/<id>.schema.json defining its domain fields (copy _template.schema.json), (3) build/point a skill at it. The envelope never changes; existing profiles stay valid.",
+  "layers": [
+    {
+      "id": "app_store",
+      "title": "Shopify App Store intelligence",
+      "status": "active",
+      "owner_skill": "ci-appstore",
+      "schema": "schema/layers/app_store.schema.json",
+      "layer_version": "1.0",
+      "summary": "Everything observable on the public App Store listing + review pages: name/subtitle strategy, badges, pricing tiers & model, reviews (rating/count/velocity/complaint themes), positioning, keyword-search visibility, capability matrix vs the baseline app, screenshot merchandising."
+    },
+    {
+      "id": "pricing",
+      "title": "Pricing intelligence",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Longitudinal pricing & packaging: archived fee timelines, silent increases, effective take-rate, discounting. (Snapshot App Store pricing lives in app_store.)"
+    },
+    {
+      "id": "messaging",
+      "title": "Messaging & positioning intelligence",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Homepage/landing narrative, value-prop language, competitive claims, proof and objection-handling patterns."
+    },
+    {
+      "id": "ad_creative",
+      "title": "Ad creative intelligence",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Observable paid creative from public ad libraries: active ads, angles, hooks, run duration."
+    },
+    {
+      "id": "seo_content",
+      "title": "SEO & content intelligence",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Organic footprint: comparison pages, content moats, ranking keywords."
+    },
+    {
+      "id": "sentiment",
+      "title": "Customer sentiment intelligence",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Voice-of-customer beyond the App Store: review sites and forums, churn triggers, switching narratives."
+    },
+    {
+      "id": "tech_stack",
+      "title": "Technical stack detection",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "Detected site stack, analytics & martech tags, infrastructure signals."
+    },
+    {
+      "id": "ai_visibility",
+      "title": "AI / LLM visibility",
+      "status": "planned",
+      "owner_skill": "unassigned",
+      "schema": null,
+      "layer_version": null,
+      "summary": "How the app surfaces in LLM answers and AI-driven discovery."
+    }
+  ]
+}
