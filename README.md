@@ -35,8 +35,13 @@ Clone the repo and symlink the skills you want into your Claude Code skills fold
 ```bash
 git clone https://github.com/gop-v-5/claude-skills.git
 cd claude-skills
-ln -s "$PWD/skills/schema-markup" ~/.claude/skills/schema-markup
+mkdir -p ~/.claude/skills
+ln -s "$PWD/skills/schema-markup"        ~/.claude/skills/schema-markup
+ln -s "$PWD/skills/cro"                  ~/.claude/skills/cro
+ln -s "$PWD/skills/ad-fatigue-detection" ~/.claude/skills/ad-fatigue-detection
 ```
+
+Then open Claude Code, run `/skills`, and check they're listed.
 
 Each skill's own `SKILL.md` / `README.md` covers its setup (for example copying `.env.example` to `.env`).
 

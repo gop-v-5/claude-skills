@@ -457,7 +457,7 @@ def score_ad(
     domains = strong_domains(avail)
     available_domains = {metric_domain(c.metric) for c in avail}
     if band in CORROBORATION_GATED_BANDS and len(domains) < CORROBORATION_MIN_SIGNALS:
-        # The Active threshold can move after M2 calibration. Cap immediately
+        # The Active threshold can move after backtest calibration. Cap immediately
         # below the configured boundary instead of assuming the default 50.
         composite = min(composite, max(0.0, _band_start("Active", bands) - 0.01))
         band = _band_for(composite, bands)

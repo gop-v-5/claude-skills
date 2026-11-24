@@ -2,7 +2,7 @@
 name: ad-fatigue-detection
 description: Ad Fatigue Intelligence System for Meta — detect ad fatigue, explain why a creative is fatiguing, and recommend the next action. Scores at the ad level from daily time-series trends.
 user-invocable: true
-argument-hint: "<action> [options] — actions: score (live), backtest (M2), diagnose (M3), report (M5), run-weekly (M6)"
+argument-hint: "<action> [options] — actions: score, backtest (live); diagnose, report, run-weekly (planned)"
 allowed-tools: Read, Bash, Grep, Glob, Edit, Write
 ---
 
@@ -12,7 +12,7 @@ You are the Ad Fatigue analyst. This skill detects ad fatigue on Meta, explains 
 
 **Project location:** the `ad-fatigue-detection/` directory in this repository (the folder containing `main.py`, and `README.md`). Do NOT assume an absolute path — locate that directory in the checkout and `cd` into it before running commands. All commands below are run from there.
 
-It is being built in milestones. **`score` (M0+M1) and `backtest` (M2) are live today;** later actions are stubbed and fail loudly until their milestone lands.
+**`score` and `backtest` are live today;** the planned actions are stubbed and fail loudly until they are built.
 
 ## Environment
 
@@ -75,7 +75,7 @@ Options:
 
 The footer reports two spend figures — spend at risk (decision-ready Active/Severe only) and directional-only spend — plus whether conversion evidence is verified. A window whose length differs from the calibrated lookback falls back to the documented default weights and says so.
 
-### `/ad-fatigue-detection backtest` (LIVE, M2)
+### `/ad-fatigue-detection backtest` (LIVE)
 Pull ~12 months of history and run no-lookahead historical scoring, then fit weights/bands for **one objective family**.
 
 Three properties make a resulting calibration safe to apply, and each is enforced, not just documented:
@@ -95,14 +95,14 @@ FATIGUE_CONVERSION_ACTION_TYPES=offsite_conversion.fb_pixel_custom python3 main.
 
 Options: `--days N` (default 365), `--step-days N` (default 14, avoiding overlapping outcome windows), `--active-only`, `--objective-family {conversion,traffic,awareness,engagement,video}` (default: the family with the most labelled cutoffs), `--output PATH`, and `--apply`. Without `--apply`, the run is read-only apart from writing its local JSON artifact.
 
-### `/ad-fatigue-detection diagnose` — *not yet (M3)*
+### `/ad-fatigue-detection diagnose` — *planned*
 Explain *why* an ad is fatiguing: hook saturation / messaging repetition / visual repetition / audience saturation, with evidence.
 
-### `/ad-fatigue-detection report` — *not yet (M5)*
+### `/ad-fatigue-detection report` — *planned*
 Weekly fatigue report + modular Slack and dashboard alerts.
 
-### `/ad-fatigue-detection run-weekly` — *not yet (M6)*
-The Monday end-to-end run: refresh history → score → diagnose → recommend → report → alert.
+### `/ad-fatigue-detection run-weekly` — *planned*
+The weekly end-to-end run: refresh history → score → diagnose → recommend → report → alert.
 
 ## How to handle the user's request
 
@@ -114,7 +114,7 @@ $ARGUMENTS
 2. If no action is given, default to `score` (active ads, last 30 days).
 3. After scoring, summarize concisely: how many ads are in each band, which ads carry a **decision-ready** Active/Severe verdict and what's driving them, the spend at risk, and whether the CLI reports defaults or an applied calibration.
 4. Report Directional ads separately and say why they're blocked (name the `decision_blockers`). Do not fold their spend into "at risk", and do not describe them as Severe. If the only blocker is `conversion_evidence_unverified`, say what would clear it: cross-check the conversion counts against your warehouse or GA4, then set the attestation variables.
-5. Never recommend editing a live ad in place — per the strategy, fatigue is fixed with a NEW ad / new ad set / pause (protects Meta's learning phase).
+5. Never recommend editing a live ad in place — fatigue is fixed with a NEW ad / new ad set / pause (protects Meta's learning phase).
 6. If credentials error, check `.env` (or the environment variables) and that `requirements.txt` is installed.
 
 ## Architecture (for editing the project)
@@ -122,7 +122,7 @@ $ARGUMENTS
 Three layers — keep the engine platform-agnostic so Google/TikTok adapters drop in later:
 
 - `platforms/` — data adapters. `base.py` = `AdDataSource` interface (including `account_today()` / `settled_through()`); `meta/client.py` = daily fetcher (`time_increment=1`) + account-timezone lookup; `meta/mapping.py` = Meta → canonical schema.
-- `core/` — agnostic engine. `models.py` (canonical dataclasses), `metrics.py` (smoothing/baseline/sub-scores), `objectives.py` (objective → family → components/labels), `scoring.py` (the fatigue score, bands, and the decision guardrails), `confounders.py` (CPM-spike + volume gating). Diagnosis (M3) and recommendation (M4) land here.
+- `core/` — agnostic engine. `models.py` (canonical dataclasses), `metrics.py` (smoothing/baseline/sub-scores), `objectives.py` (objective → family → components/labels), `scoring.py` (the fatigue score, bands, and the decision guardrails), `confounders.py` (CPM-spike + volume gating). Planned diagnosis and recommendation logic will land here.
 - `validation/backtest.py` — no-lookahead labels (objective-matched), candidate profiles, guarded calibration artifact.
 - `config.py` — weights, METRIC_MAX_PCT, bands, gating thresholds, the decision guardrails, and calibration loading with provenance validation.
 - `main.py` — CLI. Tests: `python3 tests/test_scoring.py` and `python3 -m pytest tests/test_backtest.py`.

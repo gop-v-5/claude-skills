@@ -1,4 +1,4 @@
-"""No-lookahead validation and guarded M2 calibration.
+"""No-lookahead validation and guarded calibration.
 
 Every sample scores only rows on or before a historical cutoff, then labels the
 sample from the following outcome window.

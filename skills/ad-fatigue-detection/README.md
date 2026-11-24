@@ -5,15 +5,44 @@ An **Ad Fatigue Intelligence System** for Meta: detect ad fatigue, explain *why*
 It is **self-contained** — it talks to the Meta Marketing API directly and has no dependency on any other project's code. Built to extend to Google Ads / TikTok later via the `platforms/` adapter layer.
 
 
+## Example output
+
+`python3 main.py score` on five made-up ads (synthetic data, no real account):
+
+```
+  Ad Fatigue Scores — 2026-10-19 → 2026-11-17 (active ads)
+
+     Band              Score  Ad                               Days  Mult  Top drivers
+  ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  🔴  Severe            100.0  Carousel — 3 product benefits      30  1.30  ctr:100, engagement:100, cpm:100
+  🔵  Directional       100.0  UGC testimonial — 15s              30  1.30  ctr:100, engagement:100, cpa:100  [conversion_evidence_unverified]
+  🔵  Directional       100.0  Static — free-trial offer          30  1.23  ctr:97, engagement:100, cpc:100  [spend_below_decision_threshold]
+  🟢  Healthy             0.0  Hook test — founder video          30  1.00  ctr:0, engagement:0, cpm:0
+  ⚪  Insufficient Data     —  New concept — launched 5d ago       5  1.00  —  [insufficient_data]
+  ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  🔴 Severe: 1  🟠 Active: 0  🔵 Directional: 2  🟡 Early: 0  🟢 Healthy: 1  ⚪ Insufficient Data: 1
+  Spend at risk (decision-ready Active/Severe only): USD 5,535.00
+  Directional only — NOT actionable: USD 5,940.00 across 2 ad(s)
+  Decision threshold: USD 500.00 spend in window. Conversion evidence: UNVERIFIED.
+
+  Scoring configuration: defaults. Lookback: 30 days (configured 30).
+```
+
+How to read it:
+- **Carousel** is decaying on clicks, engagement and cost at once, with enough spend and a click-based objective: a **decision-ready Severe**, and its spend counts as at risk.
+- **UGC testimonial** decays just as hard, but it is optimised for sales and nobody has verified the conversion counts yet, so it stays **Directional** (not actionable) and says why.
+- **Static offer** has the same pattern on under $500 of spend: too small to act on, so **Directional**.
+- **Hook test** is flat: **Healthy**. **New concept** has 5 days of data: **Insufficient Data**, no score shown.
+
 ## Status
 
 | Action | Status |
 |---|---|
 | `score` | ✅ Live — pull daily history and score every active ad |
 | `backtest` | ✅ Live — no-lookahead validation + guarded calibration |
-| `diagnose` | ⏳ M3 — why it's fatiguing (hook / message / visual / audience) |
-| `report` | ⏳ M5 — weekly report + Slack / dashboard alerts |
-| `run-weekly` | ⏳ M6 — the Monday end-to-end run |
+| `diagnose` | ⏳ Planned — why it's fatiguing (hook / message / visual / audience) |
+| `report` | ⏳ Planned — weekly report + Slack / dashboard alerts |
+| `run-weekly` | ⏳ Planned — the weekly end-to-end run |
 
 > `score` prints whether it loaded defaults or a local calibration. `backtest` never activates a calibration unless its data guards pass, its lookback matches production, and — for a conversion-family fit — the conversion evidence has been verified. It always requires `--apply`.
 
@@ -79,7 +108,7 @@ Set the conversion action key to what Meta Insights actually returns. If your co
 export FATIGUE_CONVERSION_ACTION_TYPES=offsite_conversion.fb_pixel_custom
 ```
 
-Using `Shopify_Signup_Client_Created` or similar Ads Manager display names yields no matching Insights action. The scorer then flags `cpa_no_conversion_signal` and leaves CPA unavailable rather than calling the tracking gap fatigue.
+Using a custom event's Ads Manager display name (for example `Signup_Completed`) yields no matching Insights action. The scorer then flags `cpa_no_conversion_signal` and leaves CPA unavailable rather than calling the tracking gap fatigue.
 
 Setting that key is **not** an attestation that the event is reliable. Conversion-optimised ads stay `Directional` until you verify the counts against an independent source and set:
 
@@ -102,7 +131,7 @@ python3 main.py score
 python3 main.py score --days 21
 python3 main.py score --since 2026-01-01 --until 2026-03-31 --all
 
-# M2 dry run: writes a JSON artifact but does not change scoring configuration
+# Dry run: writes a JSON artifact but does not change scoring configuration
 python3 main.py backtest --days 365
 
 # After reviewing a successful result, activate its weights and bands
@@ -143,4 +172,4 @@ tests/               unit tests
 
 ## Note
 
-Read-only: this tool analyses and recommends; it never edits or pauses ads in Meta. Per the strategy, fatigue is fixed with a **new ad / new ad set / pause** — never by editing a live ad in place (which resets Meta's learning phase).
+Read-only: this tool analyses and recommends; it never edits or pauses ads in Meta. Fatigue is fixed with a **new ad / new ad set / pause** — never by editing a live ad in place (which resets Meta's learning phase).

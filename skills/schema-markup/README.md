@@ -17,16 +17,14 @@ It runs **validate** and **generate** back-to-back by default; ask for just one 
 
 ## Setup
 
-This skill lives in `skills/schema-markup/` inside the repo. To surface it to Claude Code, symlink it onto your skill path (same pattern as the other skills in this repo). Run this **from the repo root** so the symlink target stays relative and portable:
+This skill lives in `skills/schema-markup/` inside the repo. To surface it to Claude Code, symlink it into your Claude Code skills folder (same pattern as the other skills in this repo). Run this **from the repo root**:
 
 ```bash
-mkdir -p .claude/skills
-ln -s ../../skills/schema-markup .claude/skills/schema-markup
+mkdir -p ~/.claude/skills
+ln -s "$PWD/skills/schema-markup" ~/.claude/skills/schema-markup
 ```
 
-(`.claude/skills/` isn't committed, so on a fresh clone the `ln -s` fails without the `mkdir -p` first.)
-
-Then open Claude Code from that working folder, run `/skills`, and confirm `schema-markup` appears.
+Then open Claude Code, run `/skills`, and confirm `schema-markup` appears.
 
 ## Usage
 

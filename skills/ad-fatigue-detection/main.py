@@ -1,12 +1,12 @@
 """Ad Fatigue Intelligence System — CLI entry point.
 
-V1 is being built in milestones. What works today:
-  • score     — pull daily per-ad history and score every ad for fatigue (M0+M1)
-  • backtest  — no-lookahead historical validation + calibration (M2)
-Not yet implemented (clearly stubbed so they fail loudly, not silently):
-  • diagnose  — why an ad is fatiguing (M3)
-  • report    — weekly report + Slack/dashboard alerts (M5)
-  • run-weekly — the Monday end-to-end run (M6)
+What works today:
+  • score     — pull daily per-ad history and score every ad for fatigue
+  • backtest  — no-lookahead historical validation + calibration
+Planned (clearly stubbed so they fail loudly, not silently):
+  • diagnose  — why an ad is fatiguing
+  • report    — weekly report + Slack/dashboard alerts
+  • run-weekly — the weekly end-to-end run
 """
 from __future__ import annotations
 
@@ -213,7 +213,7 @@ def cmd_backtest(args) -> int:
         print(f"  {safe_error('Backtest failed', exc)}", file=sys.stderr)
         return 1
 
-    print(f"\n  M2 backtest status: {result['status']}")
+    print(f"\n  Backtest status: {result['status']}")
     print(f"  Objective family: {result.get('objective_family', '—')}  "
           f"Scoring lookback: {result.get('scoring_lookback_days', '—')} days  "
           f"Settled through: {result.get('window', {}).get('until', '—')}")
@@ -261,9 +261,9 @@ def cmd_backtest(args) -> int:
     return 0
 
 
-def _not_yet(name: str, milestone: str):
+def _not_yet(name: str):
     def _run(args) -> int:
-        print(f"`{name}` is not implemented yet — scheduled for milestone {milestone}.")
+        print(f"`{name}` is not implemented yet — it is planned.")
         return 2
     return _run
 
@@ -284,7 +284,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--all", action="store_true", help="include paused/inactive ads (default: active only)")
     s.set_defaults(func=cmd_score)
 
-    b = sub.add_parser("backtest", help="historical no-lookahead validation + calibration (M2)")
+    b = sub.add_parser("backtest", help="historical no-lookahead validation + calibration")
     b.add_argument("--days", type=int, default=365, help="history to fetch (default 365)")
     b.add_argument("--step-days", type=int, default=14, help="days between non-overlapping outcome cutoffs (default 14)")
     b.add_argument("--active-only", action="store_true", help="exclude inactive ads (default includes all history)")
@@ -295,9 +295,9 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--output", help="optional JSON artifact path")
     b.set_defaults(func=cmd_backtest)
 
-    for name, ms in [("diagnose", "M3"), ("report", "M5"), ("run-weekly", "M6")]:
-        st = sub.add_parser(name, help=f"(not yet — {ms})")
-        st.set_defaults(func=_not_yet(name, ms))
+    for name in ("diagnose", "report", "run-weekly"):
+        st = sub.add_parser(name, help="(planned — not yet implemented)")
+        st.set_defaults(func=_not_yet(name))
 
     return p
 

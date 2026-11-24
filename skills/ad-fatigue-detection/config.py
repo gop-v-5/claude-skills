@@ -2,7 +2,7 @@
 
 Self-contained: this project reads its own credentials and never depends on any
 other project's code. Weights, severity bands, and gating thresholds are the
-*defaults* — milestone M2 (back-test) recalibrates them against your own ads.
+*defaults* — the `backtest` command recalibrates them against your own ads.
 
 Credential precedence (highest first):
   1. real OS environment variables (CI, secrets manager, `export ...`)
@@ -92,7 +92,7 @@ except ImportError:
     pass
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5-5")
 
 META_ACCESS_TOKEN = os.getenv("META_ACCESS_TOKEN", "")
 META_AD_ACCOUNT_ID = os.getenv("META_AD_ACCOUNT_ID", "")
@@ -170,7 +170,7 @@ def require_credentials(*names: str) -> None:
         raise ValueError("\n".join(parts))
 
 
-# ── Scoring configuration (defaults; calibrated in M2) ─────────────────────
+# ── Scoring configuration (defaults; calibrated by backtest) ─────────────────────
 
 # Component weights for the weighted fatigue score. Must sum to 1.0.
 # Frequency is intentionally NOT here — it is an amplifier, not an additive term.
@@ -224,7 +224,7 @@ DEFAULT_BANDS = [
 ]
 BANDS = list(DEFAULT_BANDS)
 
-# A successful M2 run can write a local calibration file. Loading is deliberately
+# A successful backtest run can write a local calibration file. Loading is deliberately
 # fail-safe: malformed/stale files warn and leave the documented defaults intact.
 CALIBRATION_PATH = Path(os.getenv("FATIGUE_CALIBRATION_PATH", DATA_DIR / "calibration.json"))
 CALIBRATION_SOURCE = "defaults"
@@ -442,7 +442,7 @@ META_ASYNC_POLL_SECONDS = _env_int("META_ASYNC_POLL_SECONDS", 5)
 META_ASYNC_TIMEOUT_SECONDS = _env_int("META_ASYNC_TIMEOUT_SECONDS", 900)
 META_INSIGHTS_PAGE_LIMIT = max(1, _env_int("META_INSIGHTS_PAGE_LIMIT", 1000))
 
-# ── Back-test configuration (M2) ───────────────────────────────────────────
+# ── Back-test configuration ───────────────────────────────────────────
 BACKTEST_OUTCOME_WINDOW = 14    # days after a flag to check realised decay
 BACKTEST_CTR_DECLINE = 0.20     # realised CTR decline counted as "decayed"
 # Back-test scoring uses the SAME lookback as live scoring (see SCORING_LOOKBACK_DAYS).
